@@ -53,8 +53,9 @@ function expressionCalculator(expr) {
         } else {
 
             if (el !== ")") {
-                if (priority[el] <= priority[stack[stack.length - 1]])
+                while (priority[el] <= priority[stack[stack.length - 1]]) {
                     arrExit.push(stack.pop());
+                }
                 stack.push(el);
             } else {
                 while (stack[stack.length - 1] !== "(") {
@@ -73,7 +74,7 @@ function expressionCalculator(expr) {
         '+': (x, y) => x + y,
         '-': (x, y) => x - y,
         '*': (x, y) => x * y,
-        '/': (x, y) => x / y
+        '/': (x, y) => x / y,
     }
 
     const result = [];
@@ -81,17 +82,19 @@ function expressionCalculator(expr) {
     arrExit.forEach(el => {
         if (el in operators) {
             let [y, x] = [result.pop(), result.pop()];
-            result.push(operators[el](x, y))
+            result.push(operators[el](x, y));
         } else {
             result.push(el);
         }
     })
 
-
-    return result.pop();
     console.log(expr);
     console.log(arrExit);
+    return result.pop();
 
+    /*
+     20,  684, 157.55555, '-', '-'
+  */
 
 
 
